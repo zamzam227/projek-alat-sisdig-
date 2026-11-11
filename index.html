@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071a3b">
+  <meta name="description" content="Website edukasi proyek Robot Pengepel Lantai Otomatis berbasis Arduino Uno. Pelajari prinsip kerja, komponen, perakitan, wiring, dan cara penggunaan.">
+  <title>RoboMop | Robot Pengepel Otomatis Arduino Uno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="RoboMop beranda">
+      <span class="brand-mark">RM</span>
+      <span><strong>ROBO<span>MOP</span></strong><small>SMART FLOOR CARE PROJECT</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka navigasi" aria-expanded="false">☰</button>
+    <nav class="nav" id="mainNav">
+      <a href="#tentang">Tentang</a>
+      <a href="#cara-kerja">Cara Kerja</a>
+      <a href="#komponen">Komponen</a>
+      <a href="#perakitan">Perakitan</a>
+      <a href="#panduan">Panduan</a>
+      <a href="#poster">Poster</a>
+    </nav>
+    <a class="header-cta" href="#panduan">Pelajari Proyek <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero section-shell" id="home">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="pulse"></span> PROYEK ROBOTIKA • ARDUINO UNO</div>
+        <h1>Membersihkan lantai,<br><em>lebih cerdas.</em></h1>
+        <p class="hero-lead">Robot pengepel otomatis yang bergerak mandiri, mendeteksi halangan, dan membasahi kain microfiber secara berkala.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#cara-kerja">Jelajahi cara kerja <span>→</span></a>
+          <a class="btn btn-ghost" href="#poster">Lihat poster ilmiah</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>20<span> cm</span></strong><small>Batas deteksi awal</small></div>
+          <div><strong>500<span> mL</span></strong><small>Kapasitas tangki</small></div>
+          <div><strong>±430<span> rb</span></strong><small>Estimasi biaya</small></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+        <div class="visual-glow"></div>
+        <img src="assets/robot-dari-poster.jpg" alt="Ilustrasi robot pengepel otomatis dengan sensor ultrasonik, tangki air, roda, dan kain microfiber">
+        <div class="float-tag tag-sensor"><span class="tag-dot"></span> HC-SR04 <small>Obstacle detection</small></div>
+        <div class="float-tag tag-pump"><span class="tag-icon">◉</span> Water pump <small>Automatic flow</small></div>
+        <div class="visual-caption">AUTONOMOUS FLOOR MOPPING SYSTEM <span>01 / 06</span></div>
+      </div>
+      <div class="hero-bottom"><span>ARDUINO UNO R3</span><span>·</span><span>OBSTACLE AVOIDANCE</span><span>·</span><span>AUTOMATIC WATER DISPENSING</span></div>
+    </section>
+
+    <section class="intro section-shell section-pad" id="tentang">
+      <div class="section-kicker">01 / OVERVIEW</div>
+      <div class="section-heading">
+        <div><h2>Apa itu <em>RoboMop?</em></h2><p class="section-desc">Sebuah prototype kendaraan robotik beroda yang dirancang untuk membantu proses pengepelan lantai secara otomatis.</p></div>
+        <div class="heading-note">FROM SIMPLE COMPONENTS<br>TO SMART AUTOMATION</div>
+      </div>
+      <div class="intro-grid">
+        <article class="intro-card main-card">
+          <div class="card-icon">⌁</div>
+          <h3>Robot pengepel lantai otomatis</h3>
+          <p>Robot menggunakan Arduino Uno sebagai pusat kendali. Sensor ultrasonik HC-SR04 membaca jarak objek di depan robot, kemudian Arduino menentukan gerakan motor melalui driver L298N dan mengatur pompa air melalui relay.</p>
+          <p>Air dialirkan menuju area kain microfiber sehingga kain dapat membasahi dan membantu membersihkan permukaan lantai ketika robot bergerak.</p>
+          <div class="chip-row"><span>Autonomous movement</span><span>Obstacle avoidance</span><span>Automatic water dispensing</span></div>
+        </article>
+        <article class="purpose-card">
+          <div class="purpose-top"><span>PROJECT GOALS</span><span>↗</span></div>
+          <h3>Tujuan pengembangan</h3>
+          <ul class="check-list">
+            <li>Membuat prototype robot pengepel lantai otomatis.</li>
+            <li>Menerapkan konsep input–proses–output pada mikrokontroler.</li>
+            <li>Menerapkan obstacle avoidance sederhana.</li>
+            <li>Mengontrol pompa air secara otomatis.</li>
+            <li>Menguji integrasi mekanik, elektronika, dan pemrograman.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="system-flow">
+        <div class="flow-label">ALUR SISTEM UTAMA</div>
+        <div class="flow-track">
+          <div class="flow-node"><b>01</b><strong>INPUT</strong><span>HC-SR04</span><small>Membaca jarak</small></div><i>→</i>
+          <div class="flow-node active"><b>02</b><strong>PROCESS</strong><span>Arduino Uno</span><small>Mengolah keputusan</small></div><i>→</i>
+          <div class="flow-node"><b>03</b><strong>OUTPUT</strong><span>L298N + Relay</span><small>Mengatur aktuator</small></div><i>→</i>
+          <div class="flow-node"><b>04</b><strong>ACTION</strong><span>Motor + Pompa</span><small>Bergerak & mengepel</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="work-section section-pad" id="cara-kerja">
+      <div class="section-shell">
+        <div class="section-kicker light">02 / HOW IT WORKS</div>
+        <div class="section-heading light-heading">
+          <div><h2>Logika di balik <em>gerakannya.</em></h2><p class="section-desc">Ubah jarak objek untuk melihat keputusan yang diambil robot berdasarkan logika program pada modul.</p></div>
+          <div class="live-indicator"><span></span> INTERACTIVE SIMULATION</div>
+        </div>
+        <div class="simulator">
+          <div class="sim-left">
+            <div class="sim-label">SIMULATOR DETEKSI HALANGAN</div>
+            <div class="distance-display"><strong id="distanceValue">45</strong><span>cm</span><small id="distanceStatus">JALUR AMAN</small></div>
+            <label for="distanceSlider">Jarak objek di depan robot</label>
+            <input type="range" id="distanceSlider" min="5" max="100" value="45">
+            <div class="range-labels"><span>5 cm · Dekat</span><span>100 cm · Jauh</span></div>
+            <div class="sim-actions">
+              <button class="btn btn-primary" id="simulateBtn">Jalankan simulasi ↗</button>
+              <button class="btn btn-outline-light" id="resetSim">Reset</button>
+            </div>
+            <p class="sim-hint">Geser slider atau pilih jarak untuk mengubah kondisi simulasi.</p>
+          </div>
+          <div class="sim-right">
+            <div class="robot-stage">
+              <div class="stage-grid"></div>
+              <div class="mini-robot" id="miniRobot"><div class="mini-tank"></div><div class="mini-body"><span class="eye"></span><span class="eye"></span></div><div class="mini-mop"></div><div class="wheel left"></div><div class="wheel right"></div></div>
+              <div class="obstacle" id="obstacle"><span>▥</span><small>OBJEK</small></div>
+              <div class="sensor-beam" id="sensorBeam"></div>
+              <div class="stage-status" id="stageStatus">MENUNGGU SIMULASI</div>
+            </div>
+            <div class="decision-card">
+              <div><small>KEPUTUSAN SISTEM</small><strong id="decisionTitle">Siap membaca sensor</strong></div>
+              <p id="decisionText">Klik jalankan simulasi untuk melihat respons robot.</p>
+            </div>
+          </div>
+        </div>
+        <div class="steps-grid">
+          <article class="work-step"><span>01</span><div class="step-symbol">⏻</div><h3>Inisialisasi</h3><p>Arduino dinyalakan, lalu menginisialisasi sensor, pin motor, dan relay.</p></article>
+          <article class="work-step"><span>02</span><div class="step-symbol">⌖</div><h3>Baca jarak</h3><p>HC-SR04 mengirim gelombang ultrasonik dan mengukur pantulannya.</p></article>
+          <article class="work-step"><span>03</span><div class="step-symbol">⇢</div><h3>Bergerak maju</h3><p>Jika jarak lebih dari 20 cm, motor bergerak maju dan pompa bekerja periodik.</p></article>
+          <article class="work-step"><span>04</span><div class="step-symbol">↶</div><h3>Hindari halangan</h3><p>Jika jarak 20 cm atau kurang, robot berhenti, mematikan pompa, mundur, lalu belok kanan.</p></article>
+        </div>
+        <div class="timing-strip">
+          <div><span>Pompa ON</span><strong>300 ms</strong></div><div><span>Pompa OFF</span><strong>700 ms</strong></div><div><span>Mundur</span><strong>500 ms</strong></div><div><span>Belok kanan</span><strong>700 ms</strong></div>
+          <small>Nilai awal sesuai modul dan dapat disesuaikan saat pengujian.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="components-section section-shell section-pad" id="komponen">
+      <div class="section-kicker">03 / COMPONENTS</div>
+      <div class="section-heading"><div><h2>Kenali setiap <em>komponen.</em></h2><p class="section-desc">Bagian-bagian yang bekerja bersama untuk membuat robot dapat bergerak dan mengepel secara otomatis.</p></div><div class="heading-note">18 ITEM KOMPONEN<br>ESTIMASI RAB PROYEK</div></div>
+      <div class="component-toolbar">
+        <div class="filter-tabs" role="group" aria-label="Filter komponen">
+          <button class="filter-btn active" data-filter="all">Semua</button><button class="filter-btn" data-filter="control">Kontrol</button><button class="filter-btn" data-filter="motion">Penggerak</button><button class="filter-btn" data-filter="water">Sistem air</button><button class="filter-btn" data-filter="body">Mekanik & pendukung</button>
+        </div>
+        <div class="component-count"><strong id="componentCount">18</strong> komponen</div>
+      </div>
+      <div class="component-grid" id="componentGrid">
+        <article class="component-card" data-category="control"><div class="component-art arduino">UNO</div><div class="component-meta"><span>MIKROKONTROLER</span><b>01</b></div><h3>Arduino Uno R3</h3><p>Pusat kendali yang membaca sensor dan mengatur motor serta pompa.</p><div class="component-price">Rp70.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="control"><div class="component-art sensor">◉ ◉</div><div class="component-meta"><span>SENSOR JARAK</span><b>02</b></div><h3>HC-SR04</h3><p>Mengukur jarak objek di depan robot untuk mendeteksi halangan.</p><div class="component-price">Rp15.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="motion"><div class="component-art driver">L298N</div><div class="component-meta"><span>MOTOR DRIVER</span><b>03</b></div><h3>L298N Motor Driver</h3><p>Mengendalikan arah putaran dua motor DC berdasarkan perintah Arduino.</p><div class="component-price">Rp25.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="motion"><div class="component-art motor">⚙</div><div class="component-meta"><span>AKTUATOR GERAK</span><b>04</b></div><h3>DC Gear Motor</h3><p>Dua motor penggerak untuk menggerakkan roda kiri dan kanan.</p><div class="component-price">Rp60.000 <small>× 2 unit</small></div></article>
+        <article class="component-card" data-category="motion"><div class="component-art wheel">◉</div><div class="component-meta"><span>RODA PENGGERAK</span><b>05</b></div><h3>Roda Robot</h3><p>Sepasang roda yang meneruskan gerak motor ke permukaan lantai.</p><div class="component-price">Rp20.000 <small>× 2 unit</small></div></article>
+        <article class="component-card" data-category="motion"><div class="component-art caster">◎</div><div class="component-meta"><span>RODA PENYEIMBANG</span><b>06</b></div><h3>Caster Wheel</h3><p>Roda bebas untuk membantu menjaga keseimbangan chassis.</p><div class="component-price">Rp10.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="water"><div class="component-art pump">♧</div><div class="component-meta"><span>POMPA AIR</span><b>07</b></div><h3>Mini Water Pump</h3><p>Memompa air dari tangki menuju area kain microfiber.</p><div class="component-price">Rp25.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="water"><div class="component-art relay">▤</div><div class="component-meta"><span>SAKLAR ELEKTRONIK</span><b>08</b></div><h3>Relay 1 Channel 5V</h3><p>Sakelar elektronik yang mengatur ON/OFF pompa berdasarkan perintah Arduino.</p><div class="component-price">Rp10.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="water"><div class="component-art tank">▱</div><div class="component-meta"><span>PENAMPUNG AIR</span><b>09</b></div><h3>Tangki air ±500 mL</h3><p>Wadah untuk menyimpan air yang digunakan selama proses pengepelan.</p><div class="component-price">Rp20.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="water"><div class="component-art tube">⌁</div><div class="component-meta"><span>JALUR AIR</span><b>10</b></div><h3>Selang silikon</h3><p>Menyalurkan air dari tangki melalui pompa menuju area pengepel.</p><div class="component-price">Rp10.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="water"><div class="component-art cloth">▧</div><div class="component-meta"><span>MEDIA PENGEPEL</span><b>11</b></div><h3>Kain microfiber</h3><p>Media yang menyentuh lantai untuk membantu mengangkat kotoran.</p><div class="component-price">Rp20.000 <small>× 2 unit</small></div></article>
+        <article class="component-card" data-category="control"><div class="component-art battery">▰</div><div class="component-meta"><span>SUMBER DAYA</span><b>12</b></div><h3>Battery pack</h3><p>Menyediakan energi listrik bagi sistem sesuai kebutuhan komponen.</p><div class="component-price">Rp35.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="control"><div class="component-art switch">⏻</div><div class="component-meta"><span>SAKLAR UTAMA</span><b>13</b></div><h3>Saklar ON/OFF</h3><p>Memudahkan pengguna mengaktifkan dan mematikan sistem.</p><div class="component-price">Rp5.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="control"><div class="component-art cable">⌁</div><div class="component-meta"><span>KONEKSI</span><b>14</b></div><h3>Kabel jumper</h3><p>Menghubungkan pin antar modul elektronik pada rangkaian.</p><div class="component-price">Rp15.000 <small>× 1 set</small></div></article>
+        <article class="component-card" data-category="body"><div class="component-art chassis">▱</div><div class="component-meta"><span>RANGKA ROBOT</span><b>15</b></div><h3>Chassis akrilik/PVC</h3><p>Struktur utama untuk menopang dan menempatkan komponen robot.</p><div class="component-price">Rp50.000 <small>× 1 unit</small></div></article>
+        <article class="component-card" data-category="body"><div class="component-art bolts">✣</div><div class="component-meta"><span>PENGIKAT</span><b>16</b></div><h3>Baut, mur, spacer</h3><p>Mengikat komponen dan memberi jarak pemasangan pada chassis.</p><div class="component-price">Rp15.000 <small>× 1 set</small></div></article>
+        <article class="component-card" data-category="body"><div class="component-art connector">⌗</div><div class="component-meta"><span>INSTALASI</span><b>17</b></div><h3>Kabel & konektor</h3><p>Mendukung sambungan listrik antarbagian sistem.</p><div class="component-price">Rp15.000 <small>× 1 set</small></div></article>
+        <article class="component-card" data-category="body"><div class="component-art ties">⌁</div><div class="component-meta"><span>FINISHING</span><b>18</b></div><h3>Lem tembak / cable ties</h3><p>Membantu merapikan kabel dan mengamankan komponen.</p><div class="component-price">Rp15.000 <small>× 1 set</small></div></article>
+      </div>
+      <div class="budget-panel"><div><span class="budget-label">TOTAL ESTIMASI RENCANA ANGGARAN BIAYA</span><strong>Rp430.000</strong><small>Harga perkiraan pada modul; dapat berubah sesuai toko dan ketersediaan komponen.</small></div><div class="budget-mark">IDR<br><b>2026</b></div></div>
+    </section>
+
+    <section class="spec-section section-pad">
+      <div class="section-shell spec-layout">
+        <div><div class="section-kicker light">04 / TECHNICAL SPECS</div><h2>Dirancang untuk<br><em>prototipe yang ringkas.</em></h2><p class="section-desc">Spesifikasi target yang digunakan sebagai acuan perancangan dan pengujian.</p></div>
+        <div class="spec-table">
+          <div><span>Mikrokontroler</span><strong>Arduino Uno R3 compatible</strong></div>
+          <div><span>Sensor jarak</span><strong>HC-SR04</strong></div>
+          <div><span>Driver motor</span><strong>L298N</strong></div>
+          <div><span>Motor</span><strong>2 × DC Gear Motor</strong></div>
+          <div><span>Roda</span><strong>2 penggerak + 1 caster</strong></div>
+          <div><span>Pompa</span><strong>Mini DC Water Pump</strong></div>
+          <div><span>Kontrol pompa</span><strong>Relay 1 channel 5V</strong></div>
+          <div><span>Kapasitas tangki</span><strong>±500 mL</strong></div>
+          <div><span>Media pengepel</span><strong>Kain microfiber</strong></div>
+          <div><span>Ukuran chassis</span><strong>Saran: 30 × 25 cm</strong></div>
+          <div><span>Mode operasi</span><strong>Autonomous</strong></div>
+          <div><span>Ambang obstacle</span><strong>20 cm (dapat diubah)</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="build-section section-shell section-pad" id="perakitan">
+      <div class="section-kicker">05 / BUILD GUIDE</div>
+      <div class="section-heading"><div><h2>Rakit secara <em>bertahap.</em></h2><p class="section-desc">Ikuti urutan perakitan agar pemasangan mekanik, instalasi elektronik, dan pengujian lebih terarah.</p></div><div class="heading-note">13 LANGKAH<br>FROM FRAME TO TEST</div></div>
+      <div class="build-layout">
+        <div class="build-visual">
+          <img src="assets/robot-dari-poster.jpg" alt="Robot pengepel otomatis tampak dari depan">
+          <div class="build-visual-label"><span>PROTOTYPE</span><strong>ROBO<span>MOP</span> / V1</strong></div>
+        </div>
+        <div class="build-list">
+          <div class="build-item"><b>01</b><div><h3>Siapkan chassis</h3><p>Potong chassis sekitar 30 × 25 cm dan buat lubang untuk motor, roda, spacer, kabel, serta komponen.</p></div></div>
+          <div class="build-item"><b>02</b><div><h3>Pasang sistem gerak</h3><p>Pasang dua DC Gear Motor pada sisi kiri dan kanan, lalu pasang dua roda penggerak dan satu caster.</p></div></div>
+          <div class="build-item"><b>03</b><div><h3>Pasang kontrol dan sensor</h3><p>Pasang Arduino Uno dan L298N menggunakan spacer. Tempatkan HC-SR04 di bagian depan menghadap horizontal.</p></div></div>
+          <div class="build-item"><b>04</b><div><h3>Pasang sistem air</h3><p>Tempatkan tangki di tengah/atas chassis, hubungkan tangki ke pompa menggunakan selang, dan arahkan keluaran ke area microfiber.</p></div></div>
+          <div class="build-item"><b>05</b><div><h3>Pasang kain microfiber</h3><p>Pasang kain di bagian bawah menggunakan velcro agar mudah dilepas dan dicuci.</p></div></div>
+          <div class="build-item"><b>06</b><div><h3>Wiring dan pemeriksaan</h3><p>Hubungkan kabel sesuai tabel pin, periksa polaritas dan koneksi sebelum memasang baterai.</p></div></div>
+          <div class="build-item"><b>07</b><div><h3>Upload dan uji bertahap</h3><p>Upload program, lalu uji sensor, motor, pompa, dan terakhir sistem terpadu.</p></div></div>
+        </div>
+      </div>
+      <div class="note-box"><span>!</span><p><strong>Catatan desain:</strong> letakkan tangki di tengah chassis agar pusat massa tetap stabil. Gunakan debit air kecil agar lantai tidak terlalu basah.</p></div>
+    </section>
+
+    <section class="wiring-section section-pad">
+      <div class="section-shell">
+        <div class="section-kicker light">06 / CONNECTION MAP</div>
+        <div class="section-heading light-heading"><div><h2>Hubungkan dengan <em>tepat.</em></h2><p class="section-desc">Ringkasan koneksi pin berdasarkan tabel wiring pada modul proyek.</p></div><span class="wire-badge">ARDUINO UNO R3</span></div>
+        <div class="wiring-grid">
+          <article class="wire-card"><div class="wire-head"><span class="wire-icon">⌖</span><div><small>SENSOR JARAK</small><h3>HC-SR04</h3></div></div><div class="pin-row"><span>VCC</span><b>5V</b></div><div class="pin-row"><span>GND</span><b>GND</b></div><div class="pin-row"><span>TRIG</span><b>D9</b></div><div class="pin-row"><span>ECHO</span><b>D10</b></div></article>
+          <article class="wire-card"><div class="wire-head"><span class="wire-icon">⚙</span><div><small>PENGENDALI MOTOR</small><h3>L298N</h3></div></div><div class="pin-row"><span>IN1</span><b>D5</b></div><div class="pin-row"><span>IN2</span><b>D6</b></div><div class="pin-row"><span>IN3</span><b>D7</b></div><div class="pin-row"><span>IN4</span><b>D8</b></div><div class="pin-row"><span>GND</span><b>GND</b></div><div class="pin-note">OUT1/OUT2 → Motor kiri<br>OUT3/OUT4 → Motor kanan</div></article>
+          <article class="wire-card"><div class="wire-head"><span class="wire-icon">◉</span><div><small>KONTROL POMPA</small><h3>Relay 1 Channel</h3></div></div><div class="pin-row"><span>VCC</span><b>5V / supply modul</b></div><div class="pin-row"><span>GND</span><b>GND</b></div><div class="pin-row"><span>IN</span><b>D4</b></div><div class="pin-note">Kontak daya pompa menggunakan supply eksternal sesuai spesifikasi pompa.</div></article>
+        </div>
+        <div class="safety-alert"><span>⚠</span><div><strong>PENTING — KEAMANAN DAYA</strong><p>Jangan memberi beban pompa atau motor langsung dari pin 5V Arduino. Gunakan sumber daya yang sesuai. Pastikan polaritas benar dan ground sistem terhubung sesuai rancangan.</p></div></div>
+      </div>
+    </section>
+
+    <section class="guide-section section-shell section-pad" id="panduan">
+      <div class="section-kicker">07 / USER GUIDE</div>
+      <div class="section-heading"><div><h2>Siap digunakan? <em>Ikuti panduannya.</em></h2><p class="section-desc">Langkah operasional untuk menyiapkan, menjalankan, dan mengakhiri penggunaan robot.</p></div><div class="heading-note">BEFORE • DURING<br>AFTER OPERATION</div></div>
+      <div class="guide-grid">
+        <article class="guide-card"><div class="guide-number">01</div><div class="guide-icon">⌑</div><span>BEFORE START</span><h3>Persiapan</h3><ol><li>Pastikan baterai dan supply sesuai kebutuhan komponen.</li><li>Isi tangki air secukupnya dan periksa selang.</li><li>Pastikan kain microfiber terpasang kuat.</li><li>Jauhkan air dari Arduino, L298N, relay, konektor, dan baterai.</li><li>Letakkan robot di area uji yang lapang.</li></ol></article>
+        <article class="guide-card featured-guide"><div class="guide-number">02</div><div class="guide-icon">▶</div><span>RUN THE ROBOT</span><h3>Menjalankan robot</h3><ol><li>Nyalakan saklar utama robot.</li><li>Tunggu Arduino menyelesaikan inisialisasi.</li><li>Robot membaca jarak melalui sensor HC-SR04.</li><li>Jika jarak lebih dari 20 cm, robot maju dan pompa bekerja berkala.</li><li>Jika ada halangan 20 cm atau kurang, robot berhenti, mundur, lalu belok kanan.</li><li>Biarkan siklus pembacaan dan gerakan berulang selama pengawasan.</li></ol></article>
+        <article class="guide-card"><div class="guide-number">03</div><div class="guide-icon">⏻</div><span>AFTER USE</span><h3>Mengakhiri penggunaan</h3><ol><li>Matikan saklar utama sebelum memindahkan atau memeriksa rangkaian.</li><li>Lepaskan dan cuci kain microfiber.</li><li>Kosongkan tangki jika robot tidak digunakan.</li><li>Periksa kebocoran air dan rapikan kabel.</li><li>Simpan robot di tempat kering.</li></ol></article>
+      </div>
+      <div class="guide-disclaimer">Prototype ini ditujukan untuk demonstrasi dan pengujian terkontrol. Awasi pengoperasian, terutama karena air dan rangkaian elektronik berada dalam satu perangkat.</div>
+    </section>
+
+    <section class="testing-section section-pad">
+      <div class="section-shell">
+        <div class="section-kicker light">08 / TEST & MAINTENANCE</div>
+        <div class="section-heading light-heading"><div><h2>Uji sebelum <em>demo.</em></h2><p class="section-desc">Checklist pengujian dan solusi cepat berdasarkan modul.</p></div></div>
+        <div class="testing-layout">
+          <div class="check-panel"><div class="panel-title"><strong>DEMO READINESS CHECKLIST</strong><span id="checkProgress">0 / 10</span></div><div class="progress-track"><div id="checkBar"></div></div>
+            <label class="check-item"><input type="checkbox"><span>Baterai/supply sesuai tegangan komponen.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Tidak ada kabel VCC dan GND terbalik.</span></label>
+            <label class="check-item"><input type="checkbox"><span>HC-SR04 membaca jarak dengan benar.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Motor kiri dan kanan bergerak sesuai arah.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Relay dapat mengendalikan pompa.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Tidak ada kebocoran tangki atau selang.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Elektronik terlindung dari air.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Microfiber terpasang kuat dan mudah dilepas.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Robot diuji di area kecil terlebih dahulu.</span></label>
+            <label class="check-item"><input type="checkbox"><span>Saklar utama mudah dijangkau.</span></label>
+          </div>
+          <div class="trouble-panel"><div class="panel-title"><strong>TROUBLESHOOTING</strong><span>QUICK FIX</span></div>
+            <details><summary>Arduino tidak menyala</summary><p>Periksa supply, kabel USB, port, dan sumber daya.</p></details>
+            <details><summary>Motor tidak bergerak</summary><p>Periksa wiring IN1–IN4, OUT, dan supply motor pada L298N.</p></details>
+            <details><summary>Robot berputar di tempat</summary><p>Periksa arah salah satu motor. Balik polaritas motor yang terbalik atau ubah logika program.</p></details>
+            <details><summary>Sensor membaca 0 cm / tidak stabil</summary><p>Periksa koneksi TRIG D9, ECHO D10, VCC, dan GND.</p></details>
+            <details><summary>Pompa tidak hidup</summary><p>Periksa pin IN relay dan supply eksternal pompa.</p></details>
+            <details><summary>Pompa terus hidup</summary><p>Modul relay mungkin aktif LOW. Sesuaikan logika HIGH/LOW pada program.</p></details>
+            <details><summary>Air keluar terlalu banyak</summary><p>Kurangi durasi ON atau tambah interval pompa.</p></details>
+            <details><summary>Robot sulit bergerak</summary><p>Kurangi isi tangki atau beban pada chassis.</p></details>
+            <details><summary>Kain tidak menyentuh lantai</summary><p>Turunkan dudukan microfiber agar menyentuh permukaan lantai.</p></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="poster-section section-shell section-pad" id="poster">
+      <div class="section-kicker">09 / SCIENTIFIC POSTER</div>
+      <div class="section-heading"><div><h2>Proyek dalam satu <em>poster.</em></h2><p class="section-desc">Poster ilmiah proyek yang disertakan sebagai dokumentasi visual. Klik poster untuk melihat ukuran lebih besar.</p></div><a class="text-link" href="assets/poster-ilmiah-robot-pengepel.png" download>Unduh poster ↗</a></div>
+      <button class="poster-preview" id="openPoster" aria-label="Perbesar poster ilmiah">
+        <img src="assets/Robot Pengepel Otomatis_ Inovasi Cerdas.png" alt="Poster ilmiah Robot Pengepul Otomatis Berbasis Arduino Uno">
+        <span class="poster-overlay"><b>↗</b> KLIK UNTUK MEMPERBESAR</span>
+      </button>
+    </section>
+
+    <section class="closing-section">
+      <div class="section-shell closing-inner"><div class="closing-orb">RM</div><div><div class="section-kicker light">THE PROJECT IN A NUTSHELL</div><h2>Inovasi sederhana,<br><em>manfaat nyata.</em></h2><p>Robot pengepel otomatis berbasis Arduino Uno menggabungkan sistem kendali, sensor, penggerak, dan distribusi air dalam satu prototype. Proyek ini menjadi media belajar integrasi mekanik, elektronika, dan pemrograman.</p></div><a class="btn btn-primary" href="#home">Kembali ke atas ↑</a></div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="section-shell footer-inner"><a class="brand" href="#home"><span class="brand-mark">RM</span><span><strong>ROBO<span>MOP</span></strong><small>SMART FLOOR CARE PROJECT</small></span></a><p>Website edukasi proyek · Robot Pengepel Lantai Otomatis Berbasis Arduino Uno</p><span>© 2026 • PROJECT DOCUMENTATION</span></div></footer>
+
+  <div class="modal" id="posterModal" aria-hidden="true" role="dialog" aria-label="Poster ilmiah">
+    <button class="modal-close" id="closePoster" aria-label="Tutup poster">×</button>
+    <img src="assets/poster-ilmiah-robot-pengepel.png" alt="Poster ilmiah proyek Robot Pengepel Otomatis">
+  </div>
+  <button class="back-top" id="backTop" aria-label="Kembali ke atas">↑</button>
+  <script src="script.js"></script>
+</body>
+</html>
